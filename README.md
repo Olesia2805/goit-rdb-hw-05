@@ -5,10 +5,10 @@ Write a SQL query that displays the `order_details` table and the `customer_id` 
 
 ### Query:
 ```sql
-SELECT *, 
-       (SELECT customer_id 
-        FROM orders 
-        WHERE orders.id = order_details.order_id) AS customer_id
+SELECT *, (SELECT customer_id 
+           FROM orders 
+           WHERE orders.id = order_details.order_id)
+AS customer_id
 FROM order_details;
 ```
 
@@ -57,11 +57,9 @@ Solve task 3 using the `WITH` statement to create a temporary table `temp`. If y
 
 ### Query:
 ```sql
-WITH temp_table AS (
-    SELECT order_id, quantity
-    FROM order_details
-    WHERE quantity > 10
-)
+WITH temp_table AS (SELECT order_id, quantity
+                    FROM order_details
+                    WHERE quantity > 10)
 SELECT temp_table.order_id, 
        ROUND(AVG(temp_table.quantity), 2) AS avg_quantity
 FROM temp_table
@@ -80,23 +78,25 @@ Create a function with two parameters dividing the first parameter by the second
 DROP FUNCTION IF EXISTS DivideQuantity;
 
 DELIMITER //
-CREATE FUNCTION DivideQuantity(firstValue FLOAT, secondValue FLOAT)
+CREATE FUNCTION DivideQuantity (firstValue FLOAT, secondValue FLOAT)
 RETURNS FLOAT
 DETERMINISTIC
 BEGIN
+    DECLARE result FLOAT;
     IF secondValue = 0 THEN
         RETURN NULL;
     ELSE
-        RETURN firstValue / secondValue;
+        SET result = firstValue / secondValue;
+        RETURN result;
     END IF;
 END //
 DELIMITER ;
 
 SELECT quantity, 
-       DivideQuantity(quantity, 2) AS divided_by_2,
-       DivideQuantity(quantity, 3) AS divided_by_3,
-       DivideQuantity(quantity, 13) AS divided_by_13
-FROM order_details;
+       DivideQuantity(quantity, 2),
+       DivideQuantity(quantity, 3),
+       DivideQuantity(quantity, 13)
+FROM order_details
 ```
 
 ![p5.1_FUNCTION](./p5.1_FUNCTION.png)
