@@ -12,6 +12,8 @@ SELECT *,
 FROM order_details;
 ```
 
+![p1_SELECT](./p1_SELECT.png)
+
 ---
 
 ## Task 2: Nested Query in WHERE
@@ -28,6 +30,8 @@ JOIN orders ON orders.id = order_details.order_id
 WHERE order_id IN (SELECT id FROM orders WHERE shipper_id = 3);
 ```
 
+![p2_WHERE](./p2_WHERE.png)
+
 ---
 
 ## Task 3: Nested Query in FROM
@@ -42,6 +46,8 @@ FROM (SELECT order_id, quantity
       WHERE quantity > 10) AS temp_table
 GROUP BY order_id;
 ```
+
+![p3_FROM](./p3_FROM.png)
 
 ---
 
@@ -61,6 +67,8 @@ SELECT temp_table.order_id,
 FROM temp_table
 GROUP BY order_id;
 ```
+
+![p4_WITH](./p4_WITH.png)
 
 ---
 
@@ -90,5 +98,9 @@ SELECT quantity,
        DivideQuantity(quantity, 13) AS divided_by_13
 FROM order_details;
 ```
+
+![p5.1_FUNCTION](./p5.1_FUNCTION.png)
+
+![p5.2_FUNCTION_result](./p5.2_FUNCTION_result.png)
 
 ---
